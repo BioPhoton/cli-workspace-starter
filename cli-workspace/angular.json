@@ -139,7 +139,7 @@
       "root": "projects/flight-app/",
       "sourceRoot": "projects/flight-app/src",
       "projectType": "application",
-      "prefix": "app",
+      "prefix": "",
       "schematics": {},
       "architect": {
         "build": {
