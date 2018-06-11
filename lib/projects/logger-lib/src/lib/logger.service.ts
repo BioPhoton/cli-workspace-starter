@@ -1,5 +1,6 @@
 import { Injectable, Optional } from '@angular/core';
 import { LoggerConfig } from './logger.config';
+import {LogFormatterService} from './log-formatter.service';
 import { LoggerModule } from './logger.module';
 
 @Injectable({
@@ -7,18 +8,18 @@ import { LoggerModule } from './logger.module';
 })
 export class LoggerService {
 
-  constructor(@Optional() private config: LoggerConfig) {
-    console.debug('logger-service');
-    console.debug('config', config);
+  constructor(@Optional() private config: LoggerConfig,
+    private logFormatter: LogFormatterService
+  ) {
   }
 
   debug(message: string): void {
     if (!this.config.enableDebug) return;
-    console.debug(message);
+    console.debug(this.logFormatter.format(message));
   }
 
   log(message: string): void {
-    console.log(message);
+    console.log(this.logFormatter.format(message));
   }
 
 }

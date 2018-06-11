@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import { LoggerService } from 'logger-lib';
 
 @Component({
   selector: 'flight-app',
@@ -6,7 +7,12 @@ import {Component} from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor() { }
+  constructor(
+    private loggerService: LoggerService
+  ) {
+    this.loggerService.log('log');
+    this.loggerService.debug('debug');
+  }
 
 }
 

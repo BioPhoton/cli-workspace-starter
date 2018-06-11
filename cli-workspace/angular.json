@@ -249,6 +249,46 @@
           }
         }
       }
+    },
+    "passenger-api": {
+      "root": "projects/passenger-api",
+      "sourceRoot": "projects/passenger-api/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/passenger-api/tsconfig.lib.json",
+            "project": "projects/passenger-api/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/passenger-api/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/passenger-api/src/test.ts",
+            "tsConfig": "projects/passenger-api/tsconfig.spec.json",
+            "karmaConfig": "projects/passenger-api/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/passenger-api/tsconfig.lib.json",
+              "projects/passenger-api/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "flight-app",

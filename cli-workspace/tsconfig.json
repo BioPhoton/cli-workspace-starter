@@ -19,6 +19,9 @@
     "paths": {
       "@flight-workspace/flight-api": [
         "projects/flight-api/src/public_api"
+      ],
+      "passenger-api": [
+        "dist/passenger-api"
       ]
     }
   }
