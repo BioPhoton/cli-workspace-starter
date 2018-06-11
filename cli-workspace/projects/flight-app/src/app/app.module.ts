@@ -16,7 +16,7 @@ import {SidebarComponent} from './sidebar/sidebar.component';
 import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './+state';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from '../../environments/environment';
+import { environment } from '../environments/environment';
 
 
 @NgModule({

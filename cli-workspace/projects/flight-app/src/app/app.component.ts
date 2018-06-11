@@ -1,4 +1,7 @@
 import {Component} from '@angular/core';
+import {Observable} from 'rxjs/Rx';
+import {Store} from '@ngrx/store';
+import {State} from './+state/index';
 
 @Component({
   selector: 'flight-app',
@@ -6,7 +9,10 @@ import {Component} from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor() { }
+  count$: Observable<number>;
 
+  constructor(private store: Store<State>) {
+    this.count$ = this.store.select(state => state.app.count);
+  }
 }
 
