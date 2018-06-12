@@ -19,7 +19,6 @@ export class AppComponent {
 
   countUp() {
     const action = new CounterIncrementAction({incrementBy:1});
-    console.log(action)
     this.store.dispatch(action);
   }
 }
