@@ -1,6 +1,12 @@
-import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
-import { FlightBookingActions, FlightBookingActionTypes } from './flight-booking.actions';
+import {Injectable} from '@angular/core';
+import {Flight, FlightService} from '@flight-workspace/flight-api';
+import {Actions, Effect} from '@ngrx/effects';
+import {catchError, map, switchMap} from 'rxjs/operators';
+import {
+  FlightBookingActionTypes,
+  FlightsLoaded,
+  LoadFlights
+} from './flight-booking.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +14,20 @@ import { FlightBookingActions, FlightBookingActionTypes } from './flight-booking
 export class FlightBookingEffects {
 
   @Effect()
-  effect$ = this.actions$.ofType(FlightBookingActionTypes.LoadFlightBookings);
+  effect$ = this.actions$.ofType(FlightBookingActionTypes.LoadFlights)
+    .pipe(
+      switchMap((action: LoadFlights) => {
+        return this.fs
+          .find(action.payload.from, action.payload.to)
+          .pipe(
+            map((flights: Flight[]) => new FlightsLoaded({flights: flights})),
+            catchError((error) => {
+              return error;
+            })
+          );
+      })
+    );
 
-  constructor(private actions$: Actions) {}
+  constructor(private actions$: Actions, private fs: FlightService) {
+  }
 }
