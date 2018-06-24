@@ -19,19 +19,22 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './+state/app.effects';
+import {PassengersModule} from './passengers/passengers.module';
+import { PassengereeeeesModule } from './passengereeeees/passengereeeees.module';
 
 @NgModule({
   imports: [
     BrowserModule,
     HttpClientModule,
     FlightBookingModule,
-
+    PassengersModule,
     FlightApiModule.forRoot(),
     SharedModule.forRoot(),
     RouterModule.forRoot([...APP_ROUTES], {...APP_EXTRA_OPTIONS}),
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([AppEffects]),
+    PassengereeeeesModule,
   ],
   declarations: [
     AppComponent,
