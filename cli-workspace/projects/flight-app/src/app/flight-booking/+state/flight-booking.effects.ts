@@ -41,7 +41,7 @@ export class FlightBookingEffects {
               return new FlightUpdateSuccess({newFlight: flight})
             }),
             catchError((error) => {
-              return of(new FlightUpdateError({error}));
+              return of(new FlightUpdateError({error: 'Server error while saving the flight'}));
             })
           )
       })

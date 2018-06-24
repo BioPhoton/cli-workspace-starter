@@ -6,9 +6,10 @@ import {Store} from '@ngrx/store';
 import {pluck, switchMap} from 'rxjs/operators';
 import {State as FlightBookingState} from '../+state/flight-booking.reducer';
 import {
-  FlightBookingActionTypes,
+  FlightBookingActionTypes, FlightUpdateError,
   UpdateFlight
 } from '../+state/flight-booking.actions';
+import {Actions} from '@ngrx/effects';
 
 
 @Component({
@@ -21,8 +22,9 @@ export class FlightEditComponent implements OnInit {
   showWarning = false;
 
   editForm: FormGroup;
+  errorMessage: string;
 
-  constructor(private store: Store<any>, private route: ActivatedRoute, private fb: FormBuilder, private flightService: FlightService) {
+  constructor(private actions$ : Actions, private store: Store<any>, private route: ActivatedRoute, private fb: FormBuilder, private flightService: FlightService) {
     this.editForm = this.fb.group({
       'id': [],
       'from': [],
@@ -36,6 +38,15 @@ export class FlightEditComponent implements OnInit {
         switchMap((id: string) => this.flightService.findById(id))
       )
       .subscribe(flight => this.editForm.patchValue(flight));
+
+    // handling error message
+    actions$.ofType(FlightBookingActionTypes.FlightUpdateError)
+      .pipe(pluck('payload'),pluck('error'))
+      .subscribe(e => this.showError(e));
+  }
+
+  showError(error) {
+    this.errorMessage = error;
   }
 
   save(flight: Flight) {
