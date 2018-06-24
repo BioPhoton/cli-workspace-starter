@@ -33,8 +33,7 @@ import { PassengereeeeesModule } from './passengereeeees/passengereeeees.module'
     RouterModule.forRoot([...APP_ROUTES], {...APP_EXTRA_OPTIONS}),
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    EffectsModule.forRoot([AppEffects]),
-    PassengereeeeesModule,
+    EffectsModule.forRoot([AppEffects])
   ],
   declarations: [
     AppComponent,
