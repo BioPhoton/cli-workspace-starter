@@ -1,13 +1,16 @@
 import {Injectable} from '@angular/core';
 import {Flight, FlightService} from '@flight-workspace/flight-api';
 import {Actions, Effect} from '@ngrx/effects';
-import {catchError, map, switchMap} from 'rxjs/operators';
+import {concat, EMPTY, of} from 'rxjs';
+import {switchMapTo, catchError, map, switchMap} from 'rxjs/operators';
 import {
   FlightBookingActionTypes,
-  FlightsLoaded, FlightUpdateError, FlightUpdateSuccess,
-  LoadFlights, UpdateFlight
+  FlightsLoaded,
+  FlightUpdateError,
+  FlightUpdateSuccess,
+  LoadFlights,
+  UpdateFlight
 } from './flight-booking.actions';
-import {of} from 'rxjs/index';
 
 @Injectable({
   providedIn: 'root'
@@ -25,12 +28,14 @@ export class FlightBookingEffects {
           .find(action.payload.from, action.payload.to)
           .pipe(
             map((flights: Flight[]) => new FlightsLoaded({flights: flights})),
-            catchError((error) => {return of({error});})
+            catchError((error) => {
+              return of({error});
+            })
           );
       })
     );
 
-  @Effect()
+  // @Effect()
   updateFlight$ = this.actions$.ofType(FlightBookingActionTypes.UpdateFlight)
     .pipe(
       switchMap((action: UpdateFlight) => {
@@ -45,5 +50,23 @@ export class FlightBookingEffects {
             })
           )
       })
-    )
+    );
+
+  @Effect()
+  updateFlightOptimistic$ = this.actions$.ofType(FlightBookingActionTypes.UpdateFlight)
+    .pipe(
+      switchMap((action: UpdateFlight) =>
+        concat(
+          of(new FlightUpdateSuccess({newFlight: action.payload.flight})),
+          this.fs
+            .save(action.payload.flight)
+            .pipe(
+              switchMapTo(EMPTY),
+              catchError((error) => {
+                return of(new FlightUpdateError({error: 'Server error while saving the flight'}));
+              })
+            )
+        )
+      )
+    );
 }

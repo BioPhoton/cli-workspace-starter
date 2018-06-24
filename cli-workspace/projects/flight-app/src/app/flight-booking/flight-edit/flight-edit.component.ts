@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Flight, FlightService} from '@flight-workspace/flight-api';
 import {Store} from '@ngrx/store';
 import {pluck, switchMap} from 'rxjs/operators';
@@ -24,7 +24,7 @@ export class FlightEditComponent implements OnInit {
   editForm: FormGroup;
   errorMessage: string;
 
-  constructor(private actions$ : Actions, private store: Store<any>, private route: ActivatedRoute, private fb: FormBuilder, private flightService: FlightService) {
+  constructor(private actions$ : Actions, private store: Store<any>, private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private flightService: FlightService) {
     this.editForm = this.fb.group({
       'id': [],
       'from': [],
@@ -43,6 +43,13 @@ export class FlightEditComponent implements OnInit {
     actions$.ofType(FlightBookingActionTypes.FlightUpdateError)
       .pipe(pluck('payload'),pluck('error'))
       .subscribe(e => this.showError(e));
+
+    // handling navigation
+    actions$.ofType(FlightBookingActionTypes.FlightUpdateSuccess)
+      .subscribe(() => {
+        this.router.navigate(['flight-booking/flight-search'])
+      });
+
   }
 
   showError(error) {
