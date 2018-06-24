@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {Flight, FlightService} from '@flight-workspace/flight-api';
 import {Store} from '@ngrx/store';
-import * as fromFlightBooking from '../+state/flight-booking.selector';
-import {
-  FlightBookingActions, FlightBookingActionTypes,
-  FlightsLoaded, LoadFlights
-} from '../+state/flight-booking.actions';
 import {Observable} from 'rxjs/Rx';
+import {
+  FlightBookingActionTypes,
+  LoadFlights
+} from '../+state/flight-booking.actions';
+import * as fromFlightBooking from '../+state/flight-booking.selector';
 
 @Component({
   selector: 'flight-search',
@@ -30,11 +30,14 @@ export class FlightSearchComponent implements OnInit {
   };
 
   flights$: Observable<Flight[]>;
+  isFlightsPending$ : Observable<boolean>;
 
   constructor(
     private flightService: FlightService,
-  private store: Store<any>) {
-    this.flights$ = this.store.select(fromFlightBooking.getFlights)
+    private store: Store<any>
+  ) {
+    this.flights$ = this.store.select(fromFlightBooking.getFlights);
+    this.isFlightsPending$ = this.store.select(fromFlightBooking.getIsFlightsPending);
   }
 
   ngOnInit() {

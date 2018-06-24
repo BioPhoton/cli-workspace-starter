@@ -4,9 +4,10 @@ import {Actions, Effect} from '@ngrx/effects';
 import {catchError, map, switchMap} from 'rxjs/operators';
 import {
   FlightBookingActionTypes,
-  FlightsLoaded,
-  LoadFlights
+  FlightsLoaded, FlightUpdateError, FlightUpdateSuccess,
+  LoadFlights, UpdateFlight
 } from './flight-booking.actions';
+import {of} from 'rxjs/index';
 
 @Injectable({
   providedIn: 'root'
@@ -24,9 +25,25 @@ export class FlightBookingEffects {
           .find(action.payload.from, action.payload.to)
           .pipe(
             map((flights: Flight[]) => new FlightsLoaded({flights: flights})),
-            catchError((error) => {return error;})
+            catchError((error) => {return of({error});})
           );
       })
     );
 
+  @Effect()
+  updateFlight$ = this.actions$.ofType(FlightBookingActionTypes.UpdateFlight)
+    .pipe(
+      switchMap((action: UpdateFlight) => {
+        return this.fs
+          .save(action.payload.flight)
+          .pipe(
+            map((flight: Flight) => {
+              return new FlightUpdateSuccess({newFlight: flight})
+            }),
+            catchError((error) => {
+              return of(new FlightUpdateError({error}));
+            })
+          )
+      })
+    )
 }
