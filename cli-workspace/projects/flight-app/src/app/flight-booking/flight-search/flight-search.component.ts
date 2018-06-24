@@ -4,7 +4,7 @@ import {Store} from '@ngrx/store';
 import * as fromFlightBooking from '../+state/flight-booking.selector';
 import {
   FlightBookingActions, FlightBookingActionTypes,
-  FlightsLoaded
+  FlightsLoaded, LoadFlights
 } from '../+state/flight-booking.actions';
 import {Observable} from 'rxjs/Rx';
 
@@ -43,17 +43,11 @@ export class FlightSearchComponent implements OnInit {
   search(): void {
     if (!this.from || !this.to) return;
 
-    this.flightService
-      .find(this.from, this.to, this.urgent)
-      .subscribe(
-        flights => {
-          const action: FlightsLoaded = {
-            type: FlightBookingActionTypes.FlightsLoaded,
-            payload: {flights: flights}
-          };
-          this.store.dispatch(action);
-        }
-      );
+    const action: LoadFlights = {
+      type: FlightBookingActionTypes.LoadFlights,
+      payload: {from: this.from, to: this.to}
+    };
+    this.store.dispatch(action);
   }
 
   delay(): void {

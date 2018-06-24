@@ -17,7 +17,8 @@ import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './+state';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
-
+import { EffectsModule } from '@ngrx/effects';
+import { AppEffects } from './+state/app.effects';
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import { environment } from '../environments/environment';
     SharedModule.forRoot(),
     RouterModule.forRoot([...APP_ROUTES], {...APP_EXTRA_OPTIONS}),
     StoreModule.forRoot(reducers, { metaReducers }),
-    !environment.production ? StoreDevtoolsModule.instrument() : []
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    EffectsModule.forRoot([AppEffects]),
   ],
   declarations: [
     AppComponent,

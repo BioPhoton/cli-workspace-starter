@@ -13,21 +13,20 @@ import {
 })
 export class FlightBookingEffects {
 
+  constructor(private actions$: Actions, private fs: FlightService) {
+  }
+
   @Effect()
-  effect$ = this.actions$.ofType(FlightBookingActionTypes.LoadFlights)
+  loadFlights$ = this.actions$.ofType(FlightBookingActionTypes.LoadFlights)
     .pipe(
       switchMap((action: LoadFlights) => {
         return this.fs
           .find(action.payload.from, action.payload.to)
           .pipe(
             map((flights: Flight[]) => new FlightsLoaded({flights: flights})),
-            catchError((error) => {
-              return error;
-            })
+            catchError((error) => {return error;})
           );
       })
     );
 
-  constructor(private actions$: Actions, private fs: FlightService) {
-  }
 }
