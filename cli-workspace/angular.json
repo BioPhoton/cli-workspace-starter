@@ -152,7 +152,8 @@
             "tsConfig": "projects/flight-app/tsconfig.app.json",
             "assets": [
               "projects/flight-app/src/favicon.ico",
-              "projects/flight-app/src/assets"
+              "projects/flight-app/src/assets",
+              "projects/flight-app/src/manifest.json"
             ],
             "styles": [
               "projects/flight-app/src/styles.css"
@@ -176,7 +177,8 @@
               "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
-              "buildOptimizer": true
+              "buildOptimizer": true,
+              "serviceWorker": true
             }
           }
         },
@@ -210,7 +212,8 @@
             "scripts": [],
             "assets": [
               "projects/flight-app/src/favicon.ico",
-              "projects/flight-app/src/assets"
+              "projects/flight-app/src/assets",
+              "projects/flight-app/src/manifest.json"
             ]
           }
         },
