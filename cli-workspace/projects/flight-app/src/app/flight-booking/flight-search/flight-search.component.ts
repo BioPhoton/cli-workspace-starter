@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FlightService} from '@flight-workspace/flight-api';
+import {LocalBasketService} from '../services/local-basked.service';
 
 @Component({
   selector: 'flight-search',
@@ -23,7 +24,9 @@ export class FlightSearchComponent implements OnInit {
   };
 
   constructor(
-    private flightService: FlightService) {
+    private flightService: FlightService,
+    private localBasketService: LocalBasketService,
+  ) {
   }
 
   ngOnInit() {
@@ -38,6 +41,20 @@ export class FlightSearchComponent implements OnInit {
 
   delay(): void {
     this.flightService.delay();
+  }
+
+  saveBasket(): void {
+    this.localBasketService.save(this.basket).then(
+      _ => console.debug('successfully saved basket"'),
+      err => console.error('error saving basket', err)
+    )
+  }
+
+  loadBasket(): void {
+    this.localBasketService.load().then(
+      basket => { this.basket = basket; },
+      err => console.error('error loading basket', err)
+    );
   }
 
 }

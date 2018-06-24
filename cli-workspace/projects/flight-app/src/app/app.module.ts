@@ -15,6 +15,8 @@ import {SharedModule} from './shared/shared.module';
 import {SidebarComponent} from './sidebar/sidebar.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatSnackBarModule} from '@angular/material';
 
 
 @NgModule({
@@ -26,7 +28,9 @@ import { environment } from '../environments/environment';
     FlightApiModule.forRoot(),
     SharedModule.forRoot(),
     RouterModule.forRoot([...APP_ROUTES], {...APP_EXTRA_OPTIONS}),
-    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
+    BrowserAnimationsModule,
+    MatSnackBarModule
   ],
   declarations: [
     AppComponent,
