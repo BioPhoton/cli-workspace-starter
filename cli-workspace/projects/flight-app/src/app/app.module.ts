@@ -1,4 +1,4 @@
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
@@ -13,6 +13,8 @@ import {HomeComponent} from './home/home.component';
 import {NavbarComponent} from './navbar/navbar.component';
 import {SharedModule} from './shared/shared.module';
 import {SidebarComponent} from './sidebar/sidebar.component';
+import {OAuthModule} from 'angular-oauth2-oidc';
+import {AuthInterceptor} from './shared/auth/services/auth.intercepter.service';
 
 
 @NgModule({
@@ -20,6 +22,7 @@ import {SidebarComponent} from './sidebar/sidebar.component';
     BrowserModule,
     HttpClientModule,
     FlightBookingModule,
+    OAuthModule.forRoot(),
 
     FlightApiModule.forRoot(),
     SharedModule.forRoot(),
@@ -32,7 +35,13 @@ import {SidebarComponent} from './sidebar/sidebar.component';
     HomeComponent,
     BasketComponent
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -24,5 +24,5 @@ export const APP_ROUTES: Routes = [
 ]
 
 export const APP_EXTRA_OPTIONS: ExtraOptions = {
-
+  useHash:true
 }
