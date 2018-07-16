@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
+import {pluck} from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +17,11 @@ export class HomeComponent implements OnInit {
   _userName: string = '';
 
   ngOnInit() {
-    this.needsLogin = !!this.route.snapshot.params['needsLogin'];
+    this.route.params
+      .pipe(pluck('needsLogin'))
+      .subscribe(
+        (v: boolean) => this.needsLogin = v
+      )
   }
 
   get userName(): string {
