@@ -1,6 +1,11 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
+import {Store} from '@ngrx/store';
 import {pluck} from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import {State} from '../+state/index';
+import {CounterIncrementAction} from '../+state/app.actions';
+import * as fromApp from '../+state/app.selectors';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +15,18 @@ import {pluck} from 'rxjs/operators';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute) {
+  count$: Observable<number>;
+
+  constructor(
+    private route: ActivatedRoute,
+    private store: Store<State>
+  ) {
+    this.count$ = this.store.select(fromApp.getCount)
+  }
+
+  countUp() {
+    const action = new CounterIncrementAction({incrementBy:1});
+    this.store.dispatch(action);
   }
 
   needsLogin: boolean;
