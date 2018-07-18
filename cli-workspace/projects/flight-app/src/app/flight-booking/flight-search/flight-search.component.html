@@ -29,14 +29,6 @@
           Search
         </button>
 
-        <button *ngIf="flights.length > 0" class="btn btn-default"
-          (click)="delay()">
-          Delay 1st Flight
-        </button>
-
-        <div *ngIf="flights.length > 0">
-          {{flights.length}} flights found!
-        </div>
 
       </div>
     </form>
@@ -45,7 +37,7 @@
 </div>
 
 <div class="row">
-  <div *ngFor="let f of flights">
+  <div *ngFor="let f of (flights$ | async)">
 
     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
       <flight-card

@@ -9,7 +9,6 @@ import { environment } from '../../environments/environment';
 import * as fromApp from './app.reducer';
 
 export interface State {
-
   app: fromApp.State;
 }
 
