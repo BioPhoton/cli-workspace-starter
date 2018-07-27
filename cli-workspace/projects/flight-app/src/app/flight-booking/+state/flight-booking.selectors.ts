@@ -6,4 +6,9 @@ export const getFlightBookingState = createFeatureSelector<FlightBooking>('fligh
 export const getFlights = createSelector(
   getFlightBookingState,
   (state: FlightBooking) => state.flights
-)
+);
+
+export const getIsFlightsPending = createSelector(
+  getFlightBookingState,
+  (state: FlightBooking) => state.isFlightsPending
+);

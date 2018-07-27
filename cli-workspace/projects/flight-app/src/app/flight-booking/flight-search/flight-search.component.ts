@@ -21,6 +21,7 @@ export class FlightSearchComponent implements OnInit {
   }
 
   flights$: Observable<Flight[]>;
+  isFlightsPending$: Observable<boolean>;
 
   // "shopping basket" with selected flights
   basket: object = {
@@ -32,6 +33,7 @@ export class FlightSearchComponent implements OnInit {
     private flightService: FlightService,
     private store: Store<any>) {
     this.flights$ = this.store.pipe(select(fromFlightBooking.getFlights));
+    this.isFlightsPending$ = this.store.pipe(select(fromFlightBooking.getIsFlightsPending))
   }
 
   ngOnInit() {

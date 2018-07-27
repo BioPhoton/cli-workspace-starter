@@ -26,9 +26,8 @@
       <div class="form-group">
         <button (click)="search()" [disabled]="!from || !to"
           class="btn btn-default">
-          Search
+          Search {{(isFlightsPending$ | async) ? 'loading...' : ''}}
         </button>
-
 
       </div>
     </form>
