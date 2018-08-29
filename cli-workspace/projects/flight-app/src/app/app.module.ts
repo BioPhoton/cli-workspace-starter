@@ -20,7 +20,6 @@ import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './+state/app.effects';
 import {PassengersModule} from './passengers/passengers.module';
-import { PassengereeeeesModule } from './passengereeeees/passengereeeees.module';
 
 @NgModule({
   imports: [
