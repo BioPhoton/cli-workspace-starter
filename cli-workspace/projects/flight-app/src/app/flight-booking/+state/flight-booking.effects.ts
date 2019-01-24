@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Flight, FlightService} from '@flight-workspace/flight-api';
-import {Actions, Effect} from '@ngrx/effects';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import {concat, EMPTY, of} from 'rxjs';
 import {switchMapTo, catchError, map, switchMap} from 'rxjs/operators';
 import {
@@ -21,8 +21,9 @@ export class FlightBookingEffects {
   }
 
   @Effect()
-  loadFlights$ = this.actions$.ofType(FlightBookingActionTypes.LoadFlights)
+  loadFlights$ = this.actions$
     .pipe(
+      ofType(FlightBookingActionTypes.LoadFlights),
       switchMap((action: LoadFlights) => {
         return this.fs
           .find(action.payload.from, action.payload.to)
@@ -36,8 +37,9 @@ export class FlightBookingEffects {
     );
 
   // @Effect()
-  updateFlight$ = this.actions$.ofType(FlightBookingActionTypes.UpdateFlight)
+  updateFlight$ = this.actions$
     .pipe(
+      ofType(FlightBookingActionTypes.UpdateFlight),
       switchMap((action: UpdateFlight) => {
         return this.fs
           .save(action.payload.flight)
@@ -53,8 +55,9 @@ export class FlightBookingEffects {
     );
 
   @Effect()
-  updateFlightOptimistic$ = this.actions$.ofType(FlightBookingActionTypes.UpdateFlight)
+  updateFlightOptimistic$ = this.actions$
     .pipe(
+      ofType(FlightBookingActionTypes.UpdateFlight),
       switchMap((action: UpdateFlight) =>
         concat(
           of(new FlightUpdateSuccess({newFlight: action.payload.flight})),
