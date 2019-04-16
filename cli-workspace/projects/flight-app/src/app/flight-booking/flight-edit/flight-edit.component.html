@@ -14,8 +14,13 @@
   </div>
 
   <div class="content">
-    <p>Id: {{id}}</p>
-    <p>ShowDetails: {{showDetails}}</p>
+    <p>Id: {{id$ | async}}</p>
+    <p>ShowDetails: {{showDetails$ | async}}</p>
+
+    <pre *ngIf="flight">
+      {{flight | json}}
+    </pre>
+
   </div>
 </div>
 

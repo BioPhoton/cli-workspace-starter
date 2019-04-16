@@ -3,8 +3,19 @@
     <sidebar-cmp></sidebar-cmp>
   </div>
   <div class="main-panel">
+
     <navbar-cmp></navbar-cmp>
     <div class="content">
+      {{'APP_NAME' | translate:{value: '1.2.3'} }}
+
+      <ul>
+        <li>
+          <a setLang="en">EN</a>
+        </li>
+        <li>
+          <a (click)="setLang('de')">DE</a>
+        </li>
+      </ul>
 
       <router-outlet></router-outlet>
 
