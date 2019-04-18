@@ -7,7 +7,7 @@ import {
   Validators
 } from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import {isDifferent, isOffensive, ValidationService} from '../validators';
+import {isDifferent, ValidationService} from '../validators';
 
 @Component({
   selector: 'app-flight-edit',

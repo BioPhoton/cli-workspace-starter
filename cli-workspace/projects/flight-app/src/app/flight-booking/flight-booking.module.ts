@@ -10,6 +10,7 @@ import {FlightEditComponent} from './flight-edit/flight-edit.component';
 import {FlightSearchComponent} from './flight-search/flight-search.component';
 import {FormControlStateComponent} from './form-control-state/form-control-state.component';
 import {PassengerSearchComponent} from './passenger-search/passenger-search.component';
+import { CounterComponent } from './counter/counter.component';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import {PassengerSearchComponent} from './passenger-search/passenger-search.comp
     PassengerSearchComponent,
     FlightEditComponent,
     FlightBookingComponent,
-    FormControlStateComponent
+    FormControlStateComponent,
+    CounterComponent
   ],
   providers: [],
   exports: [
