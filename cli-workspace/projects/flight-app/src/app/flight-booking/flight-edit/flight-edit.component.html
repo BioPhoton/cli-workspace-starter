@@ -17,5 +17,17 @@
     <p>Id: {{id}}</p>
     <p>ShowDetails: {{showDetails}}</p>
   </div>
+
+
+  <form [formGroup]="editForm">
+    <input type="text" formControlName="ruleName" />
+    <input type="text" formControlName="ruleName1" />
+
+    <button type="submit">
+      Submit
+    </button>
+  </form>
+
+
 </div>
 

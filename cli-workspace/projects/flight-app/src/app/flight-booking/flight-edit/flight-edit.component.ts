@@ -1,5 +1,13 @@
 import {Component, OnInit} from '@angular/core';
+import {
+  AbstractControlOptions,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators
+} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
+import {isDifferent, isOffensive, ValidationService} from '../validators';
 
 @Component({
   selector: 'app-flight-edit',
@@ -10,7 +18,21 @@ export class FlightEditComponent implements OnInit {
   showDetails: string;
   showWarning = false;
 
-  constructor(private route: ActivatedRoute) {
+  editForm: FormGroup;
+
+
+  constructor(private route: ActivatedRoute,
+              private fb: FormBuilder,
+              private vS: ValidationService) {
+
+    this.editForm = this.fb.group({
+      ruleName: ['my rule name', [], [] ],
+      ruleName1: ['my rule name', [], [] ]
+    }, {
+      validators: [isDifferent(['ruleName', 'ruleName1'])]
+
+    });
+    console.log('editForm', this.editForm);
   }
 
   ngOnInit() {
