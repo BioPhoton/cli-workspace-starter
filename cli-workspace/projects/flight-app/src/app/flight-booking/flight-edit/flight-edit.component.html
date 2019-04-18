@@ -21,8 +21,9 @@
 
   <form [formGroup]="editForm">
     <input type="text" formControlName="ruleName" />
-    <input type="text" formControlName="ruleName1" />
-    <counter></counter>
+
+    <counter formControlName="ruleName1"></counter>
+    ruleName1: {{editForm.get('ruleName1').value}}
     <button type="submit">
       Submit
     </button>

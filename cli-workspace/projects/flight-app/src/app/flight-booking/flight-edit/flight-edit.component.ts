@@ -27,7 +27,7 @@ export class FlightEditComponent implements OnInit {
 
     this.editForm = this.fb.group({
       ruleName: ['my rule name', [], [] ],
-      ruleName1: ['my rule name', [], [] ]
+      ruleName1: [0, [], [] ]
     }, {
       validators: [isDifferent(['ruleName', 'ruleName1'])]
 
